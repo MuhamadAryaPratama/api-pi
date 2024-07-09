@@ -30,9 +30,6 @@ export const Login = async (req, res) => {
             { expiresIn: '1d' }
         );
 
-        // Simpan token di cookie atau local storage di sini
-        res.cookie('token', token, { httpOnly: true }); // Contoh jika menggunakan cookie
-
         res.status(200).json({ token, name: user.name, email: user.email });
 
     } catch (error) {
