@@ -5,8 +5,9 @@ dotenv.config();
 
 export const verifyUser = (req, res, next) => {
     try {
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
+        // Ambil token dari cookie atau local storage
+        const token = req.cookies.token || req.headers['authorization']?.split(' ')[1];
+
         if (!token) return res.status(401).json({ msg: "Token not found" });
 
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
