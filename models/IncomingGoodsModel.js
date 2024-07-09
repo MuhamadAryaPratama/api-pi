@@ -4,7 +4,7 @@ import Products from "./ProductModel.js";
 
 const { DataTypes } = Sequelize;
 
-const IncomingGoods = db.define('incomingGoods', {
+const IncomingGoods = db.define('incominggoods', {
     uuid: {
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,
