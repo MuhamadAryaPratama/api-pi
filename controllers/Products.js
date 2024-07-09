@@ -16,9 +16,11 @@ export const getProducts = async (req, res) => {
         });
         res.status(200).json(response);
     } catch (error) {
-        res.status(500).json({ msg: error.message });
+        console.error("Error fetching products:", error);
+        res.status(500).json({ msg: "Internal Server Error" });
     }
 }
+
 
 export const getProductById = async (req, res) => {
     try {
