@@ -6,21 +6,35 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const Login = async (req, res) => {
-    const user = await User.findOne({
-        where: {
-            email: req.body.email
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({ msg: "User tidak ditemukan" });
         }
-    });
-    if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
-    const match = await argon2.verify(user.password, req.body.password);
-    if (!match) return res.status(400).json({ msg: "Wrong Password" });
 
-    const uuid = user.uuid;
-    const name = user.name;
-    const email = user.email;
-    const token = jwt.sign({ userId: user.id, uuid, name, email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const match = await argon2.verify(user.password, password);
+        if (!match) {
+            return res.status(400).json({ msg: "Password salah" });
+        }
 
-    res.status(200).json({ token });
+        const token = jwt.sign(
+            { userId: user.id, uuid: user.uuid, name: user.name, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        );
+
+        res.status(200).json({ token, name: user.name, email: user.email });
+
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
 }
 
 export const Me = async (req, res) => {
