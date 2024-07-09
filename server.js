@@ -45,7 +45,7 @@ app.use(AuthRoute);
 app.use(IncomingGoodsRoute);
 app.use(OutgoingGoodsRoute);
 
-// store.sync();
+store.sync();
 
 app.listen(process.env.APP_PORT, ()=> {
     console.log('Server up and running...');
