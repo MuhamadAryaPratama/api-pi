@@ -12,6 +12,10 @@ dotenv.config();
 
 const app = express();
 
+// (async()=>{
+//     await db.sync();
+// })();
+
 app.use(cors({
     credentials: true,
     origin: 'http://localhost:3000'
@@ -23,6 +27,8 @@ app.use(AuthRoute);
 app.use(IncomingGoodsRoute);
 app.use(OutgoingGoodsRoute);
 
-app.listen(5000, ()=> {
+// store.sync();
+
+app.listen(5000, () => {
     console.log('Server up and running...');
 });
