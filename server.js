@@ -20,9 +20,9 @@ const store = new sessionStore({
     db: db
 });
 
-(async()=>{
-    await db.sync();
-})();
+// (async()=>{
+//     await db.sync();
+// })();
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -47,6 +47,6 @@ app.use(OutgoingGoodsRoute);
 
 // store.sync();
 
-app.listen(process.env.APP_PORT, ()=> {
+app.listen(5000, ()=> {
     console.log('Server up and running...');
 });
